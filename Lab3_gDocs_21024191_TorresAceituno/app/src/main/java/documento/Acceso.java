@@ -1,4 +1,4 @@
-package documentoInfo;
+package documento;
 
 /**
  *

@@ -30,13 +30,9 @@ public class Usuario {
         return fechaCreacionUser;
     }
     
-    
-    
     @Override
     public String toString() {
         return "Usuario{" + "nombre=" + nombre + ", contrasena=" + contrasena + ", fechaCreacionUser=" + fechaCreacionUser + '}';
     }
-    
-    
     
 }

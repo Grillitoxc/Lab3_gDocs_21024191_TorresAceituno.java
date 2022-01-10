@@ -1,8 +1,8 @@
 package paradigmaDocs;
 // IMPORTS
+import documento.Documento;
 import java.util.ArrayList;
 import java.time.*;
-import documentoInfo.*;
 import usuario.*;
 
 /**
@@ -70,13 +70,45 @@ public class ParadigmaDocs {
     }
     
     // METHODS
-    public void register(Usuario user){
+    public void register(String nombre, String contrasena){
         if (listaUsuarios.isEmpty()){
+            Usuario user = new Usuario(nombre, contrasena);
+            System.out.println("Usuario registrado");
             listaUsuarios.add(user);
         }else{
+            boolean existe = false;
             for (int i = 0; i < listaUsuarios.size(); i++){
-                //
+                if(listaUsuarios.get(i).getNombre().equals(nombre)){
+                    existe = true;
+                    System.out.println("Usuario ya existe");
+                    break;
+                }
+            }
+            if(!existe){
+                Usuario userTemp = new Usuario(nombre, contrasena);
+                listaUsuarios.add(userTemp);
+                System.out.println("Usuario registrado");
             }
         }
     }   
+    public void login(String nombre, String contrasena){
+        if(!usuarioActivo.isBlank()){
+            System.out.println("Ya hay un usuario logeado");
+        }else if(listaUsuarios.isEmpty()){
+            System.out.println("No existen usuarios");
+        }else{
+            boolean existe = false;
+            for(int i = 0; i < listaUsuarios.size(); i++){
+                if(listaUsuarios.get(i).getNombre().equals(nombre) && listaUsuarios.get(i).getContrasena().equals(contrasena)){
+                    existe = true;
+                    usuarioActivo = nombre;
+                    System.out.println("Usuario logeado");
+                    break;
+                }
+            }
+            if(!existe){
+                System.out.println("Usuario no encontrado");
+            }
+        }
+    }
 }

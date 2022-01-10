@@ -6,18 +6,16 @@ package Lab3_gDocs_21024191_TorresAceituno;
 import java.util.ArrayList;
 import java.time.*;
 import paradigmaDocs.*;
-import documentoInfo.*;
+import documento.*;
 import usuario.*;
 
 
 public class App {
     public static void main(String[] args) {
         ParadigmaDocs plataforma1 = new ParadigmaDocs("GOOGLE DOCS");
-        Usuario user1 = new Usuario("Damian", "1234");
-        Usuario user2 = new Usuario("Sol", "1234");
-        Usuario user3 = new Usuario("Damian", "1234");
-        plataforma1.register(user1);
-        plataforma1.register(user3);
+        plataforma1.register("Hola", "XD");
+        plataforma1.register("XD", "HOLA");
+        plataforma1.login("XD", "HOLA");
         System.out.println(plataforma1);
     }
 }

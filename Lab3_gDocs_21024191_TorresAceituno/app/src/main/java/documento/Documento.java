@@ -1,4 +1,4 @@
-package documentoInfo;
+package documento;
 // IMPORTS
 import java.util.ArrayList;
 import java.time.*;

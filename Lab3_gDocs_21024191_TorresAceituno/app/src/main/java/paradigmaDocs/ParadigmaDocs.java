@@ -44,6 +44,15 @@ public class ParadigmaDocs {
         return listaDocumentos;
     }
     
+    public Usuario getUserByName(String user){
+        for(int i = 0; i < listaUsuarios.size(); i++){
+            if(listaUsuarios.get(i).getNombre().equals(user)){
+                return listaUsuarios.get(i);
+            }
+        }
+        return null;
+    }
+    
     // SETTERS
     public void setNombre(String nombre) {
         this.nombre = nombre;

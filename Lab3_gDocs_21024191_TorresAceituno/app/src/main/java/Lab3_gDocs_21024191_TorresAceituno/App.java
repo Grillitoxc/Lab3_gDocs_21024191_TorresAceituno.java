@@ -3,6 +3,8 @@ package Lab3_gDocs_21024191_TorresAceituno;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import paradigmaDocs.*;
+import documento.*;
+import usuario.*;
 
 public class App {
     public static void main(String[] args) {
@@ -12,6 +14,9 @@ public class App {
         int opcion;
         String username = "";
         String password = "";
+        String nameDoc = "";
+        String contentDoc = "";
+        Usuario user;
         while(!salir){
             if(!p1.isUsuarioActivo()){
                 System.out.println("### EDITOR COLABORATIVO ###");
@@ -69,9 +74,26 @@ public class App {
                     switch (opcion) {
                         case 1:
                             System.out.println("***CREAR***");
+                            System.out.println("Ingrese el nombre del documento:");
+                            sn.nextLine();
+                            nameDoc = sn.nextLine();
+                            System.out.println("Ingrese el contenido del documento:");
+                            sn.nextLine();
+                            contentDoc = sn.nextLine();
+                            Documento doc = new Documento(nameDoc, username);
+                            Version ver = new Version(contentDoc);
+                            doc.getListaVersiones().add(ver);
+                            p1.getListaDocumentos().add(doc);
+                            user = p1.getUserByName(username);
+                            user.getAutorDeDocumentos().add(doc);
+                            System.out.println("Se ha creado el documento");
                             break;
                         case 2:
                             System.out.println("***COMPARTIR***");
+                            break;
+                        case 11:
+                            System.out.println("***VISUALIZAR PLATAFORMA***");
+                            System.out.println(p1.toString());
                             break;
                         case 12:
                             p1.logout();

@@ -3,6 +3,8 @@ package paradigmaDocs;
 import documento.Documento;
 import java.util.ArrayList;
 import java.time.*;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 import usuario.*;
 
 /**
@@ -10,11 +12,11 @@ import usuario.*;
  * @author Grillitoxc
  */
 public class ParadigmaDocs {
-    String nombre;
-    LocalDate fecha = LocalDate.now();
-    ArrayList<Usuario> listaUsuarios = new ArrayList<>();
-    String usuarioActivo = "";
-    ArrayList<Documento> listaDocumentos = new ArrayList<>();
+    private String nombre;
+    private LocalDate fecha = LocalDate.now();
+    private ArrayList<Usuario> listaUsuarios = new ArrayList<>();
+    private boolean usuarioActivo = false;
+    private ArrayList<Documento> listaDocumentos = new ArrayList<>();
     
     // CONSTRUCTOR
     public ParadigmaDocs(String nombre) {
@@ -34,7 +36,7 @@ public class ParadigmaDocs {
         return listaUsuarios;
     }
 
-    public String getUsuarioActivo() {
+    public boolean isUsuarioActivo() {
         return usuarioActivo;
     }
 
@@ -55,7 +57,7 @@ public class ParadigmaDocs {
         this.listaUsuarios = listaUsuarios;
     }
 
-    public void setUsuarioActivo(String usuarioActivo) {
+    public void setUsuarioActivo(boolean usuarioActivo) {
         this.usuarioActivo = usuarioActivo;
     }
 
@@ -73,42 +75,48 @@ public class ParadigmaDocs {
     public void register(String nombre, String contrasena){
         if (listaUsuarios.isEmpty()){
             Usuario user = new Usuario(nombre, contrasena);
-            System.out.println("Usuario registrado");
+            System.out.println("Usuario ingresado exitosamente.");
             listaUsuarios.add(user);
         }else{
             boolean existe = false;
             for (int i = 0; i < listaUsuarios.size(); i++){
                 if(listaUsuarios.get(i).getNombre().equals(nombre)){
                     existe = true;
-                    System.out.println("Usuario ya existe");
+                    System.out.println("El nombre de usuario ingresado ya existe, vuelva a intentarlo.");
                     break;
                 }
             }
             if(!existe){
                 Usuario userTemp = new Usuario(nombre, contrasena);
                 listaUsuarios.add(userTemp);
-                System.out.println("Usuario registrado");
+                System.out.println("Usuario ingresado exitosamente.");
             }
         }
     }   
+    
     public void login(String nombre, String contrasena){
-        if(!usuarioActivo.isBlank()){
-            System.out.println("Ya hay un usuario logeado");
-        }else if(listaUsuarios.isEmpty()){
-            System.out.println("No existen usuarios");
+        if(listaUsuarios.isEmpty()){
+            System.out.println("No existen usuarios registrados, por favor, primero registra un usuario.");
         }else{
             boolean existe = false;
             for(int i = 0; i < listaUsuarios.size(); i++){
                 if(listaUsuarios.get(i).getNombre().equals(nombre) && listaUsuarios.get(i).getContrasena().equals(contrasena)){
                     existe = true;
-                    usuarioActivo = nombre;
-                    System.out.println("Usuario logeado");
+                    usuarioActivo = true;
+                    System.out.println("Sesion iniciada exitosamente.");
                     break;
                 }
             }
             if(!existe){
-                System.out.println("Usuario no encontrado");
+                System.out.println("Usuario no encontrado.");
             }
+        }
+    }
+    
+    public void logout(){
+        if(usuarioActivo){
+            setUsuarioActivo(false);
+            System.out.println("Has salido de la sesion actual.");
         }
     }
 }

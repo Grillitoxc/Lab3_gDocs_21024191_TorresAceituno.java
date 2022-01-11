@@ -11,6 +11,7 @@ public class Usuario {
     String contrasena;
     LocalDate fechaCreacionUser = LocalDate.now();
     
+    
     // CONSTRUCTOR 
     public Usuario(String nombre, String contrasena) {
         this.nombre = nombre;

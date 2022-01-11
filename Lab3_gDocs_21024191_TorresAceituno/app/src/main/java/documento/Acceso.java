@@ -6,6 +6,6 @@ package documento;
  */
 public class Acceso {
     String nombre;
-    char tipoAcceso;
+    char permiso;
     
 }

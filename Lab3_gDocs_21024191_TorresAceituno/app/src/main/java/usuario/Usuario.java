@@ -23,7 +23,7 @@ public class Usuario {
         usuariosCreados++;
         id = Usuario.usuariosCreados;
     }
-
+    
     // GETTERS
     public int getId() {
         return id;

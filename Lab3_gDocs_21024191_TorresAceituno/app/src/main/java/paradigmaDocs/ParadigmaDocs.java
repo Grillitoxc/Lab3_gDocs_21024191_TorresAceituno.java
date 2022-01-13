@@ -1,11 +1,11 @@
 package paradigmaDocs;
 // IMPORTS
-import documento.Documento;
 import java.util.ArrayList;
 import java.time.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import usuario.*;
+import documento.*;
 
 /**
  *
@@ -48,6 +48,15 @@ public class ParadigmaDocs {
         for(int i = 0; i < listaUsuarios.size(); i++){
             if(listaUsuarios.get(i).getNombre().equals(user)){
                 return listaUsuarios.get(i);
+            }
+        }
+        return null;
+    }
+    
+    public Documento getDocById(int id){
+        for(int i = 0; i < listaDocumentos.size(); i++){
+            if(listaDocumentos.get(i).getId() == id){
+                return listaDocumentos.get(i);
             }
         }
         return null;
@@ -128,4 +137,15 @@ public class ParadigmaDocs {
             System.out.println("Has salido de la sesion actual.");
         }
     }
+    
+    public boolean isRegistered(String name){
+        for(int i = 0; i < listaUsuarios.size(); i++){
+            if(listaUsuarios.get(i).getNombre().equals(name)){
+                    return true;
+            }
+        }
+        return false;
+    }
+    
+    
 }

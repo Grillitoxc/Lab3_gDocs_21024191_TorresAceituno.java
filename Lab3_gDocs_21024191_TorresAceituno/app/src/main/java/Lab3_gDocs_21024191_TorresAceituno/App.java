@@ -12,14 +12,15 @@ public class App {
         ParadigmaDocs p1 = new ParadigmaDocs("PARADIGMADOCS");
         Scanner sn = new Scanner(System.in);
         boolean salir = false;
-        boolean salir2 = false;
-        boolean salir3 = false;
+        boolean salir2;
+        boolean salir3;
         int opcion;
         int opcionTemp;
         int id;
         Documento docTemp;
         char permiso;
         ArrayList<String> listaTempUsers = new ArrayList<>();
+        ArrayList<Acceso> listaTempAccesos = new ArrayList<>();
         String username = "";
         String usernameTemp = "";
         String password = "";
@@ -109,61 +110,82 @@ public class App {
                                     System.out.println("No existe el id ingresado, por favor vuelva a intentarlo.");
                                     break;
                                 }else{
-                                    System.out.println("Permiso de lectura   =  r");
-                                    System.out.println("Permiso de escritura =  w");
-                                    System.out.println("Permiso de compartir =  s");
-                                    System.out.println("Introduzca el permiso a compartir: ");
-                                    permiso = sn.next().charAt(0);
-                                    if((permiso == 'w')||(permiso == 'r')||(permiso == 's')){
-                                        System.out.println("Permiso ingresado correctamente.");
-                                        System.out.println("Ingrese el primer usuario: ");
-                                        sn.nextLine();
-                                        usernameTemp = sn.nextLine();
-                                        while(!salir2){
-                                            if(p1.isRegistered(usernameTemp)){
-                                                listaTempUsers.add(usernameTemp);
-                                                System.out.println("Usuario ingresado.");
-                                                salir2 = true;
-                                            }else{
-                                            System.out.println("Usuario no registrado en la plataforma, vuelva a intentarlo.");
-                                            break;
-                                            }   
-                                        }
-                                        while(!salir3){    
-                                            try{
-                                                System.out.println("1. Ingresar otro usuario");
-                                                System.out.println("2. Finalizar Compartir");
-                                                System.out.println("Ingrese la opción deseada: ");
-                                                opcionTemp = sn.nextInt();
-                                                switch(opcionTemp){
-                                                    case 1:
-                                                        if(p1.isRegistered(usernameTemp)){
-                                                            System.out.println("Ingrese otro usuario: ");
-                                                            usernameTemp = sn.nextLine();
-                                                            listaTempUsers.add(usernameTemp);
-                                                            System.out.println("Usuario ingresado.");
-                                                        }else{
-                                                            System.out.println("Usuario no registrado en la plataforma, vuelva a intentarlo.");
-                                                        }
-                                                        break;
-                                                    case 2:
-                                                        salir3 = true;
-                                                        if(listaTempUsers.isEmpty()){
-                                                            System.out.println("No se han ingresado permisos.");
-                                                        }else{
-                                                            System.out.println("Se han ingresado el permiso a los usuarios.");
-                                                            break;
-                                                        }
-                                                    default:
-                                                        System.out.println("Las opciones son 1 o 2, por favor vuelva a intentarlo.");
-                                                }
-                                            }catch(InputMismatchException e){
-                                                System.out.println("El menu solo admite como entrada numeros.");
-                                                sn.next();
+                                    if(p1.isAuthor(username, id)){
+                                        System.out.println("Permiso de lectura   =  r");
+                                        System.out.println("Permiso de escritura =  w");
+                                        System.out.println("Permiso de comentario =  c");
+                                        System.out.println("Introduzca el permiso a compartir: ");
+                                        permiso = sn.next().charAt(0);
+                                        if((permiso == 'w')||(permiso == 'r')||(permiso == 'c')){
+                                            System.out.println("Permiso ingresado correctamente.");
+                                            System.out.println("Ingrese el primer usuario: ");
+                                            sn.nextLine();
+                                            usernameTemp = sn.nextLine();
+                                            salir2 = false;
+                                            listaTempUsers.clear();
+                                            while(!salir2){
+                                                if((p1.isRegistered(usernameTemp))&&(!p1.isAuthor(usernameTemp, id))){
+                                                    if(!listaTempUsers.contains(usernameTemp)){
+                                                        listaTempUsers.add(usernameTemp);
+                                                        System.out.println("Usuario ingresado.");
+                                                    }else{
+                                                        System.out.println("Usuario ya ingresado, ingrese un usuario distinto.");
+                                                    }
+                                                    salir2 = true;
+                                                    usernameTemp = "";
+                                                }else{
+                                                    System.out.println("El usuario es autor del documento o el usuario ingresado no esta registrado en la plataforma, vuelva a intentarlo.");
+                                                break;
+                                                }   
                                             }
+                                            salir3 = false;
+                                            while(!salir3){    
+                                                try{
+                                                    System.out.println("1. Ingresar otro usuario");
+                                                    System.out.println("2. Finalizar Compartir");
+                                                    System.out.println("Ingrese la opcion deseada: ");
+                                                    opcionTemp = sn.nextInt();
+                                                    switch(opcionTemp){
+                                                        case 1:
+                                                            System.out.println("Ingrese otro usuario: ");
+                                                            sn.nextLine();
+                                                            usernameTemp = sn.nextLine();
+                                                            if((p1.isRegistered(usernameTemp))&&(!p1.isAuthor(usernameTemp, id))){    
+                                                                if(!listaTempUsers.contains(usernameTemp)){
+                                                                    listaTempUsers.add(usernameTemp);
+                                                                    System.out.println("Usuario ingresado.");
+                                                                }else{
+                                                                    System.out.println("Usuario ya ingresado, ingrese un usuario distinto.");
+                                                                }
+                                                                usernameTemp = "";
+                                                            }else{
+                                                                System.out.println("El usuario es autor del documento o el usuario ingresado no esta registrado en la plataforma, vuelva a intentarlo.");
+                                                            }
+                                                            break;
+                                                        case 2:
+                                                            salir3 = true;
+                                                            if(listaTempUsers.isEmpty()){
+                                                                System.out.println("No se han ingresado permisos.");
+                                                            }else{
+                                                                listaTempAccesos = Acceso.crearPermisos(listaTempUsers, permiso);
+                                                                docTemp.actualizarPermisos(listaTempAccesos);
+                                                                System.out.println("Se ha ingresado el permiso a los usuarios ingresados.");
+                                                            }
+                                                            break;
+                                                        default:
+                                                            System.out.println("Las opciones son 1 o 2, por favor vuelva a intentarlo.");
+                                                    }
+                                                }catch(InputMismatchException e){
+                                                    System.out.println("El menu solo admite como entrada numeros.");
+                                                    sn.next();
+                                                }
+                                            }
+                                        }else{
+                                            System.out.println("El permiso ingresado es incorrecto, por favor vuelva a intentarlo.");
+                                            break;
                                         }
                                     }else{
-                                        System.out.println("El permiso ingresado es incorrecto, por favor vuelva a intentarlo.");
+                                        System.out.println("El usuario activo no es dueño del documento, por lo que no puede compartir.");
                                         break;
                                     }
                                 }
@@ -171,7 +193,7 @@ public class App {
                             }
                         case 11:
                             System.out.println("***VISUALIZAR PLATAFORMA***");
-                            System.out.println(p1.toString());
+                            System.out.println(p1.getDocById(0).recorrerToString());
                             break;
                         case 12:
                             p1.logout();
@@ -181,7 +203,7 @@ public class App {
                             System.out.println("Gracias por usar nuestra plataforma.");
                             break; 
                         default:
-                            System.out.println("Las opciones son entre 1 a 4, por favor vuelva a intentarlo.");
+                            System.out.println("Las opciones son entre 1 a 13, por favor vuelva a intentarlo.");
                     }
                 }catch (InputMismatchException e){
                     System.out.println("El menu solo admite como entrada numeros.");

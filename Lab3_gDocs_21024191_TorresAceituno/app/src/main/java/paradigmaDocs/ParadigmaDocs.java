@@ -147,5 +147,14 @@ public class ParadigmaDocs {
         return false;
     }
     
-    
+    public boolean isAuthor(String name, int id){
+        Usuario userAuthor;
+        userAuthor = getUserByName(name);
+        for(int i = 0; i < userAuthor.getAutorDeDocumentos().size(); i++){
+            if(userAuthor.getAutorDeDocumentos().get(i).getId() == id){
+                return true;
+            }
+        }
+        return false;
+    }
 }

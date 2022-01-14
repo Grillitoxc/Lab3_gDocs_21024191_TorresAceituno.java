@@ -3,7 +3,6 @@ package documento;
 import java.util.ArrayList;
 import java.time.*;
 
-
 /**
  *
  * @author Grillitoxc
@@ -55,9 +54,6 @@ public class Documento {
         return listaAccesos;
     }
     
-    
-    
-    
     // SETTERS
     public void setId(int id) {
         this.id = id;
@@ -86,8 +82,36 @@ public class Documento {
     public void setListaAccesos(ArrayList<Acceso> listaAccesos) {
         this.listaAccesos = listaAccesos;
     }
+
+    @Override
+    public String toString() {
+        return "Documento{" + "id=" + id + ", nombre=" + nombre + ", autor=" + autor + ", fechaCreacion=" + fechaCreacion + ", fechaActualizacion=" + fechaActualizacion + ", listaVersiones=" + listaVersiones + ", listaAccesos=" + listaAccesos + '}';
+    }
     
+    // METHODS
+    public ArrayList<Acceso> actualizarPermisos(ArrayList<Acceso> listaAccesosNuevos){
+        boolean flag = false;
+        for(int i = 0; i < listaAccesosNuevos.size(); i++){
+            for(int j = 0; j < listaAccesos.size(); j++){
+                if(listaAccesosNuevos.get(i).getNombre().equals(listaAccesos.get(j).getNombre())){
+                    listaAccesos.get(j).setPermiso(listaAccesosNuevos.get(i).getPermiso());
+                    flag = true;
+                    break;
+                }
+            }
+            if(!flag){
+                listaAccesos.add(listaAccesosNuevos.get(i));
+            }
+        }
+        return listaAccesos;
+    }
     
-    
-    
+    public String recorrerToString(){
+        String string = "";
+        for(int i = 0; i < listaAccesos.size(); i++){
+            string = string + listaAccesos.get(i).toString();
+        }
+        return string;
+    }
+      
 }

@@ -113,5 +113,17 @@ public class Documento {
         }
         return string;
     }
-      
+    
+    public char getPermisoByName(String username){
+        for(int i = 0; i < listaAccesos.size(); i++){
+            if(listaAccesos.get(i).getNombre().equals(username)){
+                return listaAccesos.get(i).getPermiso();
+            }
+        }
+        return ' ';
+    }
+
+    public String getContenidoLastVer(){
+        return listaVersiones.get(listaVersiones.size() - 1).getContenido();
+    }
 }

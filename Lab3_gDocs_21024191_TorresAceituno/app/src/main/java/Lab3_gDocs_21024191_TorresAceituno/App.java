@@ -25,7 +25,7 @@ public class App {
         String usernameTemp = "";
         String password = "";
         String nameDoc = "";
-        String contentDoc = "";
+            String contentDoc = "";
         Usuario user;
         while(!salir){
             if(!p1.isUsuarioActivo()){
@@ -191,6 +191,31 @@ public class App {
                                 }
                             break;
                             }
+                        case 3:
+                            if(p1.getListaDocumentos().isEmpty()){
+                                System.out.println("No existen documentos creados en la plataforma aún.");
+                                break;
+                            } else {
+                                System.out.println("Introduzca el id del documento deseado: ");
+                                id = sn.nextInt();
+                                docTemp = p1.getDocById(id);
+                                if (docTemp == null) {
+                                    System.out.println("No existe el id ingresado, por favor vuelva a intentarlo.");
+                                    break;
+                                } else {
+                                    if (p1.isAuthor(username, id) || (docTemp.getPermisoByName(username) == 'w' || docTemp.getPermisoByName(username) == 'c')) {
+                                        System.out.println("Ingrese el contenido que desea agregar del documento:");
+                                        sn.nextLine();
+                                        String newContentDoc = docTemp.getContenidoLastVer() + sn.nextLine();
+                                        Version newVer = new Version(newContentDoc);
+                                        docTemp.getListaVersiones().add(newVer);
+                                        System.out.println("Se ha agregado contenido al documento de ID: " + docTemp.getId() + " Version: " + newVer.getId());
+                                    } else {
+                                        System.out.println("El usuario activo no tiene los permisos suficientes para agregar contenido.");
+                                    }
+                                }
+                            }
+                            break;
                         case 11:
                             System.out.println("***VISUALIZAR PLATAFORMA***");
                             System.out.println(p1.getDocById(0).recorrerToString());

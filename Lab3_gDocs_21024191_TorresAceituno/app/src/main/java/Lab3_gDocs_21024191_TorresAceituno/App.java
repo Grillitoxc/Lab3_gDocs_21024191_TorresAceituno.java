@@ -17,8 +17,8 @@ public class App {
         int opcion;
         int opcionTemp;
         int id;
-        Documento docTemp;
         char permiso;
+        Documento docTemp;
         ArrayList<String> listaTempUsers = new ArrayList<>();
         ArrayList<Acceso> listaTempAccesos = new ArrayList<>();
         String username = "";
@@ -173,6 +173,7 @@ public class App {
                                                             }else{
                                                                 listaTempAccesos = Acceso.crearPermisos(listaTempUsers, permiso);
                                                                 docTemp.actualizarPermisos(listaTempAccesos);
+                                                                p1.agregarDocsAccesoUser(listaTempUsers, docTemp);
                                                                 System.out.println("Se ha ingresado el permiso a los usuarios ingresados.");
                                                             }
                                                             break;

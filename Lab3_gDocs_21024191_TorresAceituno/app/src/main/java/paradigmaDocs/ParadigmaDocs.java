@@ -157,4 +157,16 @@ public class ParadigmaDocs {
         }
         return false;
     }
+    
+    public void agregarDocsAccesoUser(ArrayList<String> listaTempUsers, Documento docTemp){
+        for(int i = 0; i < listaTempUsers.size(); i++){
+            Usuario userTempAcceso;
+            userTempAcceso = getUserByName(listaTempUsers.get(i));
+            if(!userTempAcceso.getDocsAccesibles().contains(docTemp.getId())){
+                userTempAcceso.getDocsAccesibles().add(docTemp.getId());
+            }
+        }
+    }
+    
+    
 }

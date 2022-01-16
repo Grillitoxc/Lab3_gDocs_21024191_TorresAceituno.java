@@ -15,6 +15,7 @@ public class Usuario {
     private String contrasena;
     private LocalDate fechaCreacionUser = LocalDate.now();
     private ArrayList<Documento> autorDeDocumentos = new ArrayList<>();
+    private ArrayList<Integer> docsAccesibles = new ArrayList<>();
     
     // CONSTRUCTOR 
     public Usuario(String nombre, String contrasena) {
@@ -43,6 +44,10 @@ public class Usuario {
 
     public ArrayList<Documento> getAutorDeDocumentos() {
         return autorDeDocumentos;
+    }
+
+    public ArrayList<Integer> getDocsAccesibles() {
+        return docsAccesibles;
     }
 
     @Override

@@ -2,6 +2,7 @@ package documento;
 // IMPORTS
 import java.util.ArrayList;
 import java.time.*;
+import java.util.Collections;
 
 /**
  *
@@ -125,5 +126,29 @@ public class Documento {
 
     public String getContenidoLastVer(){
         return listaVersiones.get(listaVersiones.size() - 1).getContenido();
+    }
+
+    public int getIndexOfVersionById(int id){
+        for (int i = 0; i < listaVersiones.size(); i++) {
+            if(listaVersiones.get(i).getId() == id){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public void restaurarVersion(int id){
+        int indexVersion = getIndexOfVersionById(id);
+        if(indexVersion == -1){
+            System.out.println("La version con el ID ingresado no existe.");
+        }else{
+            Collections.swap(listaVersiones, id, listaVersiones.size() - 1);
+            System.out.println("Se ha restaurado la version con ID: " + listaVersiones.get(indexVersion).getId());
+        }
+    }
+
+    public void revokeAccess(){
+        listaAccesos.clear();
+        System.out.println("Todos los permisos otorgados para el documento de ID: " + getId() + " han sido revocados.");
     }
 }

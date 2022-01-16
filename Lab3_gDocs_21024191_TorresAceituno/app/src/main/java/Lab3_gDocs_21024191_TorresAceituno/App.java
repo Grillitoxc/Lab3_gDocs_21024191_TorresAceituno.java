@@ -73,9 +73,13 @@ public class App {
             }else{
                 System.out.println("***SESION ACTIVA***");
                 System.out.println("Sesion actual: " + username);
-                System.out.println("1. Crear nuevo documento");
-                System.out.println("2. Compartir documento");
-                System.out.println("3. Agregar contenido a un documento");
+                System.out.println("1.  Crear nuevo documento");
+                System.out.println("2.  Compartir documento");
+                System.out.println("3.  Agregar contenido a un documento");
+                System.out.println("4.  Restaurar version anterior de un documento");
+                System.out.println("5.  Revocar accesos otorgados a un documento");
+                System.out.println("6.  Buscar texto en documentos accesibles");
+                System.out.println("11. Visualizar plataforma actual");
                 System.out.println("12. Cerrar sesion");
                 System.out.println("13. Salir del programa");
                 System.out.println("Introduzca la operacion que desee: ");
@@ -110,7 +114,7 @@ public class App {
                                     System.out.println("No existe el id ingresado, por favor vuelva a intentarlo.");
                                     break;
                                 }else{
-                                    if(p1.isAuthor(username, id)){
+                                    if((p1.isAuthor(username, id)) || (docTemp.getPermisoByName(username) == 'w')){
                                         System.out.println("Permiso de lectura   =  r");
                                         System.out.println("Permiso de escritura =  w");
                                         System.out.println("Permiso de comentario =  c");
@@ -192,6 +196,7 @@ public class App {
                             break;
                             }
                         case 3:
+                            System.out.println("***AGREGAR CONTENIDO***");
                             if(p1.getListaDocumentos().isEmpty()){
                                 System.out.println("No existen documentos creados en la plataforma aún.");
                                 break;
@@ -212,6 +217,50 @@ public class App {
                                         System.out.println("Se ha agregado contenido al documento de ID: " + docTemp.getId() + " Version: " + newVer.getId());
                                     } else {
                                         System.out.println("El usuario activo no tiene los permisos suficientes para agregar contenido.");
+                                    }
+                                }
+                            }
+                            break;
+                        case 4:
+                            System.out.println("***RESTAURAR VERSION ANTERIOR***");
+                            if(p1.getListaDocumentos().isEmpty()){
+                                System.out.println("No existen documentos creados en la plataforma aun.");
+                                break;
+                            } else {
+                                System.out.println("Introduzca el id del documento deseado: ");
+                                id = sn.nextInt();
+                                docTemp = p1.getDocById(id);
+                                if (docTemp == null) {
+                                    System.out.println("No existe el id ingresado, por favor vuelva a intentarlo.");
+                                    break;
+                                } else {
+                                    if (p1.isAuthor(username, id)) {
+                                        System.out.println("Ingrese el ID de la version que desea restaurar:");
+                                        int idVer = sn.nextInt();
+                                        docTemp.restaurarVersion(idVer);
+                                    } else {
+                                        System.out.println("El usuario activo no es autor del documento.");
+                                    }
+                                }
+                            }
+                            break;
+                        case 5:
+                            System.out.println("***REVOCAR ACCESOS***");
+                            if(p1.getListaDocumentos().isEmpty()){
+                                System.out.println("No existen documentos creados en la plataforma aun.");
+                                break;
+                            } else {
+                                System.out.println("Introduzca el id del documento deseado: ");
+                                id = sn.nextInt();
+                                docTemp = p1.getDocById(id);
+                                if(docTemp == null){
+                                    System.out.println("No existe el id ingresado, por favor vuelva a intentarlo.");
+                                    break;
+                                } else {
+                                    if(p1.isAuthor(username, id)){
+                                        docTemp.revokeAccess();
+                                    } else {
+                                        System.out.println("El usuario activo no es autor del documento.");
                                     }
                                 }
                             }

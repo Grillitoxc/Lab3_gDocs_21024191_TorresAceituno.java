@@ -168,5 +168,46 @@ public class ParadigmaDocs {
         }
     }
     
+    public ArrayList<Integer> search(String text, String username){
+        ArrayList<Integer> results = new ArrayList<>();
+        Usuario user = getUserByName(username);
+        Documento doc;
+        char perm;
+        for (int i = 0; i < user.getAutorDeDocumentos().size(); i++) {
+            doc = user.getAutorDeDocumentos().get(i);
+            for (int j = 0; j < doc.getListaVersiones().size(); j++) {
+                if(doc.getListaVersiones().get(j).getContenido().contains(text)){
+                    results.add(doc.getId());
+                    break;
+                }
+            }
+        }
+        for (int i = 0; i < user.getDocsAccesibles().size(); i++) {
+            doc = getDocById(user.getDocsAccesibles().get(i));
+            perm = doc.getPermisoByName(username);
+            if(!(perm == ' ')) {
+                for (int j = 0; j < doc.getListaVersiones().size(); j++) {
+                    if (doc.getListaVersiones().get(j).getContenido().contains(text)) {
+                        results.add(doc.getId());
+                        break;
+                    }
+                }
+            } else {
+                user.getDocsAccesibles().remove(i);
+            }
+        }
+        return results;
+    }
+
+    public void printSearch(ArrayList<Integer> listaIds){
+        if(listaIds.isEmpty()){
+            System.out.println("No se ha encontrado el texto.");
+        }
+        String message = "Se ha encontrado el texto en los documentos: ";
+        for (int i = 0; i < listaIds.size(); i++) {
+            message = message + "\nNombre: " + getDocById(listaIds.get(i)).getNombre() + " ID: " + getDocById(listaIds.get(i)).getId();
+        }
+        System.out.println(message);
+    }
     
 }

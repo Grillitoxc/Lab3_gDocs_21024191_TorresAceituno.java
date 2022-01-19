@@ -266,6 +266,22 @@ public class App {
                                 }
                             }
                             break;
+                        case 6:
+                            System.out.println("***BUSCAR TEXTO***");
+                            if(p1.getListaDocumentos().isEmpty()) {
+                                System.out.println("No existen documentos creados en la plataforma aun.");
+                            } else {
+                                System.out.println("Introduzca el texto a buscar: ");
+                                sn.nextLine();
+                                String texto = sn.nextLine();
+                                if(texto != null){
+                                    ArrayList<Integer> results = p1.search(texto, username);
+                                    p1.printSearch(results);
+                                } else {
+                                    System.out.println("Por favor ingrese texto valido.");
+                                }
+                            }
+                            break;
                         case 11:
                             System.out.println("***VISUALIZAR PLATAFORMA***");
                             System.out.println(p1.getDocById(0).recorrerToString());

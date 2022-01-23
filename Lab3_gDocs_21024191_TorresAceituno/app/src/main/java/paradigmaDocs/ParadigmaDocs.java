@@ -89,6 +89,19 @@ public class ParadigmaDocs {
         return "ParadigmaDocs{" + "nombre=" + nombre + ", fecha=" + fecha + ", listaUsuarios=" + listaUsuarios + ", usuarioActivo=" + usuarioActivo + ", listaDocumentos=" + listaDocumentos + '}';
     }
     
+    public String recorrerDocs(){
+        String string = "";
+        if(listaDocumentos.isEmpty()){
+            return "\n   No hay documentos dentro de la plataforma.";
+        }else{
+            string = "Los documentos de la plataforma " + nombre + " son:";
+        }
+        for(int i = 0; i < listaDocumentos.size(); i++){
+            string = string + listaDocumentos.get(i).toString();
+        }
+        return string;
+    }
+    
     // METHODS
     public void register(String nombre, String contrasena){
         if (listaUsuarios.isEmpty()){
@@ -97,7 +110,7 @@ public class ParadigmaDocs {
             listaUsuarios.add(user);
         }else{
             boolean existe = false;
-            for (int i = 0; i < listaUsuarios.size(); i++){
+            for(int i = 0; i < listaUsuarios.size(); i++){
                 if(listaUsuarios.get(i).getNombre().equals(nombre)){
                     existe = true;
                     System.out.println("El nombre de usuario ingresado ya existe, vuelva a intentarlo.");

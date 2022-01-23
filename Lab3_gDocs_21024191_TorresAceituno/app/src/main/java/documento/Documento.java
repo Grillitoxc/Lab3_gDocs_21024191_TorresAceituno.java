@@ -13,7 +13,7 @@ public class Documento {
     public static int documentosCreados = -1;
     private String nombre;
     private String autor;
-    private LocalDate fechaCreacion;
+    private LocalDate fechaCreacion = LocalDate.now();
     private LocalDate fechaActualizacion;
     private ArrayList<Version> listaVersiones = new ArrayList<>();
     private ArrayList<Acceso> listaAccesos = new ArrayList<>();
@@ -86,8 +86,16 @@ public class Documento {
 
     @Override
     public String toString() {
-        return "Documento{" + "id=" + id + ", nombre=" + nombre + ", autor=" + autor + ", fechaCreacion=" + fechaCreacion + ", fechaActualizacion=" + fechaActualizacion + ", listaVersiones=" + listaVersiones + ", listaAccesos=" + listaAccesos + '}';
+        return "\n\n   Documento numero: " + id
+                + "\n   Titulo: " + nombre
+                + "\n   Autor: " + autor
+                + "\n   Fecha de creacion: " + fechaCreacion
+                + "\n   Fecha de ultima actualizacion: " + fechaActualizacion
+                + "\n   Contenido actual: " + listaVersiones.get(listaVersiones.size() - 1).getContenido()
+                + "\n   Numero de versiones creadas: " + listaVersiones.size();
     }
+
+    
     
     // METHODS
     public ArrayList<Acceso> actualizarPermisos(ArrayList<Acceso> listaAccesosNuevos){

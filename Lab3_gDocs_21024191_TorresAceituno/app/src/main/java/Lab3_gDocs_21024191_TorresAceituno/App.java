@@ -5,11 +5,55 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import paradigmaDocs.*;
 import documento.*;
+import java.time.LocalDate;
 import usuario.*;
 
 public class App {
     public static void main(String[] args) {
+        ///////////////////////// -> Inicialización de la plataforma.
+        // SECCIÓN DE EJEMPLOS // -> Creación de usuarios base.
+        ///////////////////////// -> Creación de documentos base.
+        System.out.println("### SECCION EJEMPLOS USUARIOS Y DOCS PREVIOS ###");
         ParadigmaDocs p1 = new ParadigmaDocs("PARADIGMADOCS");
+        p1.register("User1", "Contrasena1");
+        p1.register("User2", "Contrasena2");
+        p1.register("User3", "Contrasena3");
+        p1.register("User4", "Contrasena4");
+        p1.register("User5", "Contrasena5");
+        // DOC 1
+        Documento documento1 = new Documento("Titulo1", "User1");
+        Version version1 = new Version("Contenido1");
+        documento1.getListaVersiones().add(version1);
+        p1.getUserByName("User1").getAutorDeDocumentos().add(documento1);
+        p1.getListaDocumentos().add(documento1);
+        // DOC 2
+        Documento documento2 = new Documento("Titulo2", "User2");
+        Version version2 = new Version("Contenido2");
+        documento2.getListaVersiones().add(version2);
+        p1.getUserByName("User2").getAutorDeDocumentos().add(documento2);
+        p1.getListaDocumentos().add(documento2);
+        // DOC 3
+        Documento documento3 = new Documento("Titulo3", "User3");
+        Version version3 = new Version("Contenido3");
+        documento3.getListaVersiones().add(version3);
+        p1.getUserByName("User3").getAutorDeDocumentos().add(documento3);
+        p1.getListaDocumentos().add(documento3);
+        // DOC 4
+        Documento documento4 = new Documento("Titulo4", "User4");
+        Version version4 = new Version("Contenido4");
+        documento4.getListaVersiones().add(version4);
+        p1.getUserByName("User4").getAutorDeDocumentos().add(documento4);
+        p1.getListaDocumentos().add(documento4);
+        // DOC 5
+        Documento documento5 = new Documento("Titulo5", "User5");
+        Version version5 = new Version("Contenido5");
+        documento5.getListaVersiones().add(version5);
+        p1.getUserByName("User5").getAutorDeDocumentos().add(documento5);
+        p1.getListaDocumentos().add(documento5);
+        
+        //////////////////
+        // SECCIÓN MENÚ //
+        //////////////////
         Scanner sn = new Scanner(System.in);
         boolean salir = false;
         boolean salir2;
@@ -25,14 +69,14 @@ public class App {
         String usernameTemp = "";
         String password = "";
         String nameDoc = "";
-            String contentDoc = "";
+        String contentDoc = "";
         Usuario user;
         while(!salir){
             if(!p1.isUsuarioActivo()){
                 System.out.println("### EDITOR COLABORATIVO ###");
                 System.out.println("1. Registrarse");
                 System.out.println("2. Iniciar sesion");
-                System.out.println("3. Visualizar plataforma");
+                System.out.println("3. Visualizar documentos de la plataforma");
                 System.out.println("4. Salir del programa");
                 try{
                     System.out.println("Introduzca la operacion que desee: ");
@@ -57,7 +101,7 @@ public class App {
                             p1.login(username, password);
                             break;
                         case 3:
-                            System.out.println("Has seleccionado la opcion 3");
+                            System.out.println(p1.recorrerDocs());
                             break;
                         case 4:
                             salir = true;
@@ -79,9 +123,9 @@ public class App {
                 System.out.println("4.  Restaurar version anterior de un documento");
                 System.out.println("5.  Revocar accesos otorgados a un documento");
                 System.out.println("6.  Buscar texto en documentos accesibles");
-                System.out.println("11. Visualizar plataforma actual");
-                System.out.println("12. Cerrar sesion");
-                System.out.println("13. Salir del programa");
+                System.out.println("7.  Visualizar datos del usuario actual");
+                System.out.println("8.  Cerrar sesion");
+                System.out.println("9.  Salir del programa");
                 System.out.println("Introduzca la operacion que desee: ");
                 try{
                     opcion = sn.nextInt(); 
@@ -96,6 +140,7 @@ public class App {
                             Documento doc = new Documento(nameDoc, username);
                             Version ver = new Version(contentDoc);
                             doc.getListaVersiones().add(ver);
+                            doc.setFechaActualizacion(LocalDate.now());
                             p1.getListaDocumentos().add(doc);
                             user = p1.getUserByName(username);
                             user.getAutorDeDocumentos().add(doc);
@@ -215,6 +260,7 @@ public class App {
                                         String newContentDoc = docTemp.getContenidoLastVer() + sn.nextLine();
                                         Version newVer = new Version(newContentDoc);
                                         docTemp.getListaVersiones().add(newVer);
+                                        docTemp.setFechaActualizacion(LocalDate.now());
                                         System.out.println("Se ha agregado contenido al documento de ID: " + docTemp.getId() + " Version: " + newVer.getId());
                                     } else {
                                         System.out.println("El usuario activo no tiene los permisos suficientes para agregar contenido.");
@@ -239,6 +285,7 @@ public class App {
                                         System.out.println("Ingrese el ID de la version que desea restaurar:");
                                         int idVer = sn.nextInt();
                                         docTemp.restaurarVersion(idVer);
+                                        docTemp.setFechaActualizacion(LocalDate.now());
                                     } else {
                                         System.out.println("El usuario activo no es autor del documento.");
                                     }
@@ -282,14 +329,14 @@ public class App {
                                 }
                             }
                             break;
-                        case 11:
-                            System.out.println("***VISUALIZAR PLATAFORMA***");
-                            System.out.println(p1.getDocById(0).recorrerToString());
+                        case 7:
+                            System.out.println("***VISUALIZAR USUARIOs***");
+                            System.out.println(p1.getUserByName(username).toString());
                             break;
-                        case 12:
+                        case 8:
                             p1.logout();
                             break;
-                        case 13:
+                        case 9:
                             salir = true;
                             System.out.println("Gracias por usar nuestra plataforma.");
                             break; 

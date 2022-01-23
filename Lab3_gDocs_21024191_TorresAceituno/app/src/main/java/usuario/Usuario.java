@@ -49,18 +49,29 @@ public class Usuario {
     public ArrayList<Integer> getDocsAccesibles() {
         return docsAccesibles;
     }
-
+    
+    public String recorrerDocs(ArrayList listaDocs){
+        String string = "";
+        if(listaDocs.isEmpty()){
+            return "\n   No hay documentos aun.";
+        }
+        for(int i = 0; i < listaDocs.size(); i++){
+            string = string + listaDocs.get(i).toString();
+        }
+        return string;
+    }
+    
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", contrasena=" + contrasena + ", fechaCreacionUser=" + fechaCreacionUser + ", autorDeDocumentos=" + autorDeDocumentos + '}';
+        return "\nUsuario logeado: " + nombre
+                + "\nId: "+ id
+                + "\nFecha de creacion de la cuenta: " + fechaCreacionUser
+                + "\nDocumentos donde es autor: " + recorrerDocs(autorDeDocumentos)
+                + "\nDocumentos donde tiene accesos: " + recorrerDocs(docsAccesibles);
     }
 
-    
     // METHODS
     public void agregarDocAutor(Usuario user, Documento doc){
         user.getAutorDeDocumentos().add(doc);
     }
-    
-   
-    
 }

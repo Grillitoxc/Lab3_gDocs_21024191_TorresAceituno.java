@@ -8,7 +8,15 @@ import documento.*;
 import java.time.LocalDate;
 import usuario.*;
 
-public class App {
+/**
+ * Clasee main donde se incluye todo lo relacionado al menú interactivo por
+ * consola.
+ * @author Christopher Torres
+ */
+public class App { 
+    /** 
+     * @param args
+     */
     public static void main(String[] args) {
         ///////////////////////// -> Inicialización de la plataforma.
         // SECCIÓN DE EJEMPLOS // -> Creación de usuarios base.
@@ -50,6 +58,36 @@ public class App {
         documento5.getListaVersiones().add(version5);
         p1.getUserByName("User5").getAutorDeDocumentos().add(documento5);
         p1.getListaDocumentos().add(documento5);
+        // DOC 6
+        Documento documento6 = new Documento("Titulo6", "User1");
+        Version version6 = new Version("Contenido6");
+        documento6.getListaVersiones().add(version6);
+        p1.getUserByName("User1").getAutorDeDocumentos().add(documento6);
+        p1.getListaDocumentos().add(documento6);
+        // DOC 7
+        Documento documento7 = new Documento("Titulo7", "User2");
+        Version version7 = new Version("Contenido7");
+        documento7.getListaVersiones().add(version7);
+        p1.getUserByName("User2").getAutorDeDocumentos().add(documento7);
+        p1.getListaDocumentos().add(documento7);
+        // DOC 8
+        Documento documento8 = new Documento("Titulo8", "User3");
+        Version version8 = new Version("Contenido8");
+        documento8.getListaVersiones().add(version8);
+        p1.getUserByName("User3").getAutorDeDocumentos().add(documento8);
+        p1.getListaDocumentos().add(documento8);
+        // DOC 9
+        Documento documento9 = new Documento("Titulo9", "User4");
+        Version version9 = new Version("Contenido9");
+        documento9.getListaVersiones().add(version9);
+        p1.getUserByName("User4").getAutorDeDocumentos().add(documento9);
+        p1.getListaDocumentos().add(documento9);
+        // DOC 10
+        Documento documento10 = new Documento("Titulo10", "User5");
+        Version version10 = new Version("Contenido10");
+        documento10.getListaVersiones().add(version10);
+        p1.getUserByName("User5").getAutorDeDocumentos().add(documento10);
+        p1.getListaDocumentos().add(documento10);
         
         //////////////////
         // SECCIÓN MENÚ //
@@ -149,7 +187,7 @@ public class App {
                         case 2:
                             System.out.println("***COMPARTIR***");
                             if(p1.getListaDocumentos().isEmpty()){
-                                System.out.println("No existen documentos creados en la plataforma aún.");
+                                System.out.println("No existen documentos creados en la plataforma aï¿½n.");
                                 break;
                             }else{
                                 System.out.println("Introduzca el id del documento deseado: ");
@@ -235,7 +273,7 @@ public class App {
                                             break;
                                         }
                                     }else{
-                                        System.out.println("El usuario activo no es dueño del documento, por lo que no puede compartir.");
+                                        System.out.println("El usuario activo no es dueï¿½o del documento, por lo que no puede compartir.");
                                         break;
                                     }
                                 }
@@ -244,7 +282,7 @@ public class App {
                         case 3:
                             System.out.println("***AGREGAR CONTENIDO***");
                             if(p1.getListaDocumentos().isEmpty()){
-                                System.out.println("No existen documentos creados en la plataforma aún.");
+                                System.out.println("No existen documentos creados en la plataforma aï¿½n.");
                                 break;
                             } else {
                                 System.out.println("Introduzca el id del documento deseado: ");

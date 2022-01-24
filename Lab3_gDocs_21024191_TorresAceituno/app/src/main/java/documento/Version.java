@@ -16,14 +16,26 @@ public class Version {
         this.contenido = contenido;
     }
 
+    
+    /** 
+     * @return int
+     */
     public int getId() {
         return id;
     }
 
+    
+    /** 
+     * @return int
+     */
     public static int getVersionesCreadas() {
         return versionesCreadas;
     }
 
+    
+    /** 
+     * @return String
+     */
     public String getContenido() {
         return contenido;
     }

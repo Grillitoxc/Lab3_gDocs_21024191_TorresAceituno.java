@@ -6,7 +6,7 @@ import java.util.Collections;
 
 /**
  * Clase que representa un documento creado en la plataforma
- * @author Grillitoxc
+ * @author Christopher Torres
  */
 public class Documento {
     private int id;
